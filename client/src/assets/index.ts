@@ -1,0 +1,1 @@
+export {default as categoryMusic} from './categoryMusic.jpg'
