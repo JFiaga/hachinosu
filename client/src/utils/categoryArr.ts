@@ -6,7 +6,7 @@ export  const categoryArr =[
         alt:'"DJ Marshmello with an orange background and orange sweatshirt',
         categoryName:'Music',
         categorySubtitle:'Discover the musical preferences of developers.',
-        link:'/music',
+        link:'/category/music',
     }
 ]
 

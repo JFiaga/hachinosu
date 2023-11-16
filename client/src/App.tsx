@@ -2,6 +2,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Explore from "./pages/Explore";
+import Music from "./pages/Music";
 
 function App() {
   const Layout = () => {
@@ -23,8 +24,12 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/search",
+          path: "/category",
           element: <Explore />,
+        },
+        {
+          path: "/category/music",
+          element: <Music />,
         },
         {
           path: "*",
