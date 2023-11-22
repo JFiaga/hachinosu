@@ -1,31 +1,43 @@
 import { useState } from "react";
 import { categoryMusic } from "../assets";
-import { HeartCrack, HeartCrackIcon, HeartIcon, HeartOff, HeartPulse } from "lucide-react";
+import { HeartIcon, HeartOff } from "lucide-react";
 
 const MusicCard = () => {
   const [liked, setLiked] = useState(false);
+  const likeCount = 1200
+
   return (
     <div
       onDoubleClick={() => setLiked((val) => !val)}
-      className="relative w-full max-w-[450px]  border border-green-500 h-[420px] rounded-lg flex overflow-hidden flex-col "
+      className="relative w-full max-w-[450px]  border border-green-500 h-auto rounded-lg flex overflow-hidden flex-col "
     >
-      <div className="h-[300px] w-full rounded-b-3xl bg-green-500">
+      <div className="h-[320px] overflow-hidden w-full rounded-b-3xl bg-green-500">
         <img
           src={categoryMusic}
-          alt="dd"
+          alt="song cover"
           className="object-cover h-full w-full opacity-50 rounded-t-lg rounded-b-3xl"
         />
       </div>
 
-      <div className=" bg-black h-full w-full flex flex-col pt-2 pl-2">
+      <div className=" bg-black h-auto w-full flex flex-col py-2 pl-2 break-words">
         <span className="font-bold text-green-500">Artist Name</span>
         <span className="font-bold">Song Name</span>
-
-        <div
-        onClick={() => setLiked((val) => !val)}
-        className="mt-1 t bg-white p-[3px] w-fit rounded-full">
-            {liked ? <HeartOff className="text-black " /> :  <HeartIcon className="text-red-500"/>}
+        <div className="text-green-500">
+           <span className="text-white">Rank : </span>
+           <span>#1</span>
         </div>
+        <div
+          onClick={() => setLiked((val) => !val)}
+          className="mt-2  flex items-center justify-center space-x-2 p-[3px] w-fit "
+        >
+            <span className="font-medium">{liked ? likeCount + 1 : likeCount}</span>
+          {!liked ? (
+            <HeartOff className="text-black bg-white rounded-full p-[1px]" />
+          ) : (
+            <HeartIcon className="text-red-500 bg-white rounded-full p-[1px]" />
+          )}
+        </div>
+      
       </div>
     </div>
   );

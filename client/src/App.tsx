@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Explore from "./pages/Explore";
 import Music from "./pages/Music";
+import Youtuber from "./pages/Youtuber";
 
 function App() {
   const Layout = () => {
@@ -30,6 +31,9 @@ function App() {
         {
           path: "/category/music",
           element: <Music />,
+        },{
+          path: "/category/youtuber",
+          element: <Youtuber />,
         },
         {
           path: "*",
