@@ -1,18 +1,50 @@
 import { Search } from "lucide-react";
 import MusicCard from "../components/MusicCard";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import IArtist from "../interface/spotifyInterfaces";
+import { categoryMusic } from "../assets";
+import ArtistsCard from "../components/Music/ArtistsCard";
 
 const Music = () => {
-  const [data, setData] = useState([]);
+  const SPOTIFY_CLIENT_ID = "3be64a51089b4bf9bee6ef7e22ab5803";
+  const SPOTIFY_CLIENT_SECRET = "953eef0d385344a8bd5cc1770147a84d";
+  const [accessToken, setAccessToken] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [artistData, setArtistData] = useState<IArtist>();
 
   useEffect(() => {
-    axios
-      .get(`https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb`)
-      .then((res) => setData(() => res.data)).catch(err => console.log(err))
+    const authParameters = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `grant_type=client_credentials&client_id=${process.env.SPOTIFY_CLIENT_ID}&client_secret=${process.env.SPOTIFY_CLIENT_SECRET}`,
+    };
+
+    fetch("https://accounts.spotify.com/api/token", authParameters)
+      .then((result) => result.json())
+      .then((data) => setAccessToken(data.access_token));
   }, []);
 
-  console.log(data)
+  async function searchMusic() {
+    console.log(`search for ${inputValue}`);
+
+    const artistParameters = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    await fetch(
+      `https://api.spotify.com/v1/search?q=${inputValue}&type=artist`,
+      artistParameters
+    )
+      .then((response) => response.json())
+      .then((data) => setArtistData(data.artists));
+    console.log(artistData);
+  }
 
   return (
     <section className=" bg-black h-auto w-full relative flex flex-col items-center justify-center pt-[40px]">
@@ -26,18 +58,35 @@ const Music = () => {
           </span>
         </h2>
 
-        <div className="flex flex-col ">
-          <form className="rounded-full border w-full max-w-[500px] py-2 px-2 my-5 focus-within:border-mainColor flex">
+        <div className="flex flex-col w-full justify-center items-center ">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="rounded-full border w-full max-w-[500px] py-2 px-2 my-5 focus-within:border-mainColor flex"
+          >
             <input
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(event) => {
+                if (event.key == "Enter") {
+                  searchMusic();
+                }
+              }}
               type="text"
               className="bg-transparent w-full text-white font-medium rounded-full outline-none "
             />
-            <button className="">
+            <button onClick={searchMusic} className="">
               <Search className="text-mainColor" />
             </button>
           </form>
 
-          <MusicCard />
+          <div className="flex items-center justify-center w-full flex-wrap">
+            {artistData?.items.map((val) => (
+              <ArtistsCard
+                artistName={val.name}
+                imgSrc={val?.images[0]?.url || categoryMusic}
+                key={val.id}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

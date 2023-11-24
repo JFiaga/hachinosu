@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { categoryMusic } from "../assets";
+
 import { HeartIcon, HeartOff } from "lucide-react";
 
-const MusicCard = () => {
+
+type Props = {
+image:string
+}
+const MusicCard = ({image}:Props) => {
   const [liked, setLiked] = useState(false);
   const likeCount = 1200
 
@@ -13,7 +17,7 @@ const MusicCard = () => {
     >
       <div className="h-[320px] overflow-hidden w-full rounded-b-3xl bg-green-500">
         <img
-          src={categoryMusic}
+          src={image}
           alt="song cover"
           className="object-cover h-full w-full opacity-50 rounded-t-lg rounded-b-3xl"
         />

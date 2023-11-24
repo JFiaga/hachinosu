@@ -1,14 +1,17 @@
 import { Search } from "lucide-react";
 import YoutuberCard from "../components/YoutuberCard";
 
+
 const Youtuber = () => {
+  
+
   return (
     <section className=" bg-[#f1f1f1]  h-auto w-full relative flex flex-col items-center justify-center pt-[40px]">
       <div className="relative  z-[20] max-w-[1400px] w-full  min-h-screen  flex flex-col text-black space-y-10 px-8 ">
         <h2 className="flex flex-col items-center">
           <span className="capitalize rounded-full border border-black/10 px-4 w-fit text-center my-2 py-1 bg-white shadow-md text-red-600 font-bold">
             <span className="text-black">Find the best </span>
-            <span>Youtber</span>
+            <span>Youtuber</span>
           </span>
           <span className="text-3xl text-center ">
             follow by <span className="text-mainColor"> developers </span>{" "}
@@ -27,9 +30,9 @@ const Youtuber = () => {
           </form>
         </div>
 
-          <div>
-          <YoutuberCard/>
-          </div>
+        <div>
+          <YoutuberCard />
+        </div>
       </div>
     </section>
   );
