@@ -1,9 +1,30 @@
 import { Search } from "lucide-react";
 import YoutuberCard from "../components/YoutuberCard";
-
+import {  useEffect, useState } from "react";
+import IYoutubeResult from "../interface/youtbeResultInterface";
 
 const Youtuber = () => {
-  
+  const [inputalue, setInputValue] = useState("");
+
+  const [youtubeData  , setYoutubeData  ] = useState<IYoutubeResult[]>()
+
+async function searhYoutubeChannel() {
+   await fetch(
+      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${inputalue}&type=channel&key=${process.env.YOUTUBE_API_KEY}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer",
+          Accept: "application/json",
+        },
+      }
+    ).then((res) => res.json()).then((data) => setYoutubeData(data.items));
+  }
+
+    useEffect(() => {
+      console.log(youtubeData)
+    }, [youtubeData])
+    
 
   return (
     <section className=" bg-[#f1f1f1]  h-auto w-full relative flex flex-col items-center justify-center pt-[40px]">
@@ -19,19 +40,34 @@ const Youtuber = () => {
         </h2>
 
         <div className="flex flex-col ">
-          <form className="rounded-full border w-full max-w-[500px] py-2 px-2 my-5 focus-within:border-red-500 flex border-black/20">
+          <form 
+          onSubmit={e => e.preventDefault()}
+          className="rounded-full border w-full max-w-[500px] py-2 px-2 my-5 focus-within:border-red-500 flex border-black/20">
             <input
-              type="text"
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(event) => {
+                if (event.key == "Enter") {
+                  searhYoutubeChannel();
+                }
+              }}
+              type="text" 
               className="bg-transparent w-full text-black  font-medium rounded-full outline-none "
             />
-            <button className="">
+            <button onClick={searhYoutubeChannel}>
               <Search className="text-red-500" />
             </button>
           </form>
         </div>
 
-        <div>
-          <YoutuberCard />
+        <div className="flex flex-col flex-wrap">
+          {youtubeData?.map((value) => (
+
+            <YoutuberCard
+            channelName={value.snippet.channelTitle}
+            imgSrc={value.snippet.thumbnails.high?.url}
+            channelDescription={value.snippet.description}
+            />
+            ))}
         </div>
       </div>
     </section>

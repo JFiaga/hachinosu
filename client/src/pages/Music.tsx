@@ -1,13 +1,11 @@
 import { Search } from "lucide-react";
-import MusicCard from "../components/MusicCard";
 import { useEffect, useState } from "react";
 import IArtist from "../interface/spotifyInterfaces";
 import { categoryMusic } from "../assets";
 import ArtistsCard from "../components/Music/ArtistsCard";
 
 const Music = () => {
-  const SPOTIFY_CLIENT_ID = "3be64a51089b4bf9bee6ef7e22ab5803";
-  const SPOTIFY_CLIENT_SECRET = "953eef0d385344a8bd5cc1770147a84d";
+  
   const [accessToken, setAccessToken] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [artistData, setArtistData] = useState<IArtist>();
@@ -27,7 +25,7 @@ const Music = () => {
   }, []);
 
   async function searchMusic() {
-    console.log(`search for ${inputValue}`);
+   
 
     const artistParameters = {
       method: "GET",
@@ -43,7 +41,6 @@ const Music = () => {
     )
       .then((response) => response.json())
       .then((data) => setArtistData(data.artists));
-    console.log(artistData);
   }
 
   return (
