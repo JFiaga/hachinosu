@@ -17,7 +17,7 @@ const Home = () => {
           </p>
 
           <Link
-            to="/category"
+            to="/login"
             className="bg-mainColor w-fit px-10 py-2 self-center rounded-md shadowPurple"
           >
             Get started
