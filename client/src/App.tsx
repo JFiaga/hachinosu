@@ -31,10 +31,6 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/login",
-          element: <Login />,
-        },
-        {
           path: "/category",
           element: <Explore />,
         },
@@ -55,6 +51,10 @@ function App() {
           element: <div>Not Found</div>,
         },
       ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
     },
   ]);
   return <RouterProvider router={router} />;
