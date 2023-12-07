@@ -6,6 +6,7 @@ import Music from "./pages/Music";
 import Youtuber from "./pages/Youtuber";
 import Login from "./pages/Login";
 import Film from "./pages/Film";
+import Register from "./pages/Register";
 
 
 function App() {
@@ -55,6 +56,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ]);
   return <RouterProvider router={router} />;
